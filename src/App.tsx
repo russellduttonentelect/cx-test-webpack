@@ -1,39 +1,17 @@
-import React, { Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { AppRoutes } from './routes/AppRoutes';
+import { Provider } from '@sanlamcx/react-ui-next-provider';
+import './App.css';
 
-import { useTranslation } from 'react-i18next';
-
-import Paths from './constants/path';
-
-import routes from './routes';
-import { Link } from 'react-router-dom';
-
-function App() {
-    const { t } = useTranslation();
-
-    return (
-        <div>
-            {t('home.description')}
-
-            <Link to={Paths.TEST_PAGE}>Test Page</Link>
-
-            <Routes>
-                {routes.map(({ name, path, Component }, index) => (
-                    <Route
-                        key={name + index}
-                        path={path}
-                        element={
-                            <Suspense fallback={null}>
-                                <Component />
-                            </Suspense>
-                        }
-                    />
-                ))}
-
-                <Route path="*" element={<Navigate replace to={Paths.HOME} />} />
-            </Routes>
-        </div>
-    );
-}
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Provider>
+        <AppRoutes />
+      </Provider>
+    </BrowserRouter>
+  );
+};
 
 export default App;
